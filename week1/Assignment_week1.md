@@ -22,11 +22,11 @@ Step2.In "Create a new repository" page, set the new repository name, decide thi
 
 ![image](https://github.com/Astrid-sudo/AppWorksSchoolAssignment/blob/master/week1/pics%20in%20assignment/Step2.png)
 
-Step3.The website will derecting to the repo you've just created.There should be a URL on this page, make sure this is a https URL ,and then copy it.
+Step3.The website will direct to the repo you've just created.There should be a URL on this page, make sure this is a https URL ,and then copy it.
 
 ![image](https://github.com/Astrid-sudo/AppWorksSchoolAssignment/blob/master/week1/pics%20in%20assignment/Step3.png)
 
-Step4. Head to terminal, cd yourself to the directory which you'd like to upload, and then type  `git remote add origin HttpsURL`. We are now connect the local repo to gitHub.
+Step4. Head to terminal, cd yourself to the local repo which you'd like to connect with remote, and then type  `git remote add origin HttpsURL`. We are now connect the local repo to gitHub.
 
 ![image](https://github.com/Astrid-sudo/AppWorksSchoolAssignment/blob/master/week1/pics%20in%20assignment/Step4.png)
 
