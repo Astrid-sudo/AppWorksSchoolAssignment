@@ -70,8 +70,10 @@ func watchgames(for minutes: Int) {
  */
 
 enum WatchOlympics {
-    
+    /// 🤩 🤩 🤩  🤩 🤩 🤩  🤩 🤩 🤩
     case keepWatching(remainingQuota: Int, message: String)
+    
+    /// 🥺 🥺 🥺 🥺 🥺 🥺 🥺 🥺 🥺
     case goStudy(message: String)
 }
 /*:
