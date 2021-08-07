@@ -8,11 +8,13 @@
 import UIKit
 
 extension UIColor {
+   
     convenience init(hexString: String, alpha: CGFloat = 1.0) {
+       
         let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let scanner = Scanner(string: hexString)
 
-        if (hexString.hasPrefix("#")) {
+        if hexString.hasPrefix("#") {
             scanner.currentIndex = scanner.string.startIndex
         }
 
@@ -31,16 +33,5 @@ extension UIColor {
         self.init(red:red, green:green, blue:blue, alpha:alpha)
     }
 
-    func toHexString() -> String {
-        var r:CGFloat = 0
-        var g:CGFloat = 0
-        var b:CGFloat = 0
-        var a:CGFloat = 0
 
-        getRed(&r, green: &g, blue: &b, alpha: &a)
-
-        let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
-
-        return String(format:"#%06x", rgb)
-    }
 }
