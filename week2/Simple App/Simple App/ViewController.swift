@@ -9,16 +9,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var randomNumber = 0
-    // if random number is the same after press button, should generate new numbers until it show a different one.
-    // the text color on button have to be managed
-    @IBOutlet weak var middleLabel: UILabel!
+//    have to make it to MVC
     
-    @IBAction func pressFunFact(_ sender: UIButton) {
-        randomNumber = Int.random(in: 0...6)
-        update()
-        
-    }
+    @IBOutlet weak var middleLabel: UILabel!
+   
+    var randomNumber = 0
     
     let text = [
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempus.",
@@ -44,13 +39,32 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         update()
   }
+   
+   
+    @IBAction func pressFunFact(_ sender: UIButton) {
+       update()
+    }
     
-    func update(){
+   func update(){
+      
+        let newNumber = Int.random(in: 0 ..< text.count)
+        
+        if newNumber != randomNumber {
+            randomNumber = newNumber
+        } else if newNumber == randomNumber && randomNumber < text.count - 1
+        {
+            randomNumber = newNumber + 1
+        } else {
+            randomNumber = newNumber - 1
+        }
+        
+       print("randomNumber:\(randomNumber)")
+        
+        // the text color on button have to be managed
+        
         view.backgroundColor = UIColor(hexString: color[randomNumber])
         middleLabel.text = text[randomNumber]
   }
-        
-   
-    
+
 }
 
