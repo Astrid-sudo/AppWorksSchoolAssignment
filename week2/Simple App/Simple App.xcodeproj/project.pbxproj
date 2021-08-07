@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		563B441B26BE7B12003DF60A /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563B441A26BE7B12003DF60A /* Content.swift */; };
 		56A2927926BC2247009FAB0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A2927826BC2247009FAB0C /* AppDelegate.swift */; };
 		56A2927B26BC2247009FAB0C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A2927A26BC2247009FAB0C /* SceneDelegate.swift */; };
 		56A2927D26BC2247009FAB0C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A2927C26BC2247009FAB0C /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		563B441A26BE7B12003DF60A /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
 		56A2927526BC2247009FAB0C /* Simple App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		56A2927826BC2247009FAB0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		56A2927A26BC2247009FAB0C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +41,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		563B441426BE7A3B003DF60A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				56A2927C26BC2247009FAB0C /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		563B441926BE7ABB003DF60A /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				563B441A26BE7B12003DF60A /* Content.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		563B441E26BE7C5C003DF60A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				56A2927E26BC2247009FAB0C /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		56A2926C26BC2247009FAB0C = {
 			isa = PBXGroup;
 			children = (
@@ -60,9 +86,10 @@
 			children = (
 				56A2927826BC2247009FAB0C /* AppDelegate.swift */,
 				56A2927A26BC2247009FAB0C /* SceneDelegate.swift */,
-				56A2927C26BC2247009FAB0C /* ViewController.swift */,
 				56A2928D26BC28CE009FAB0C /* UIColorExtension.swift */,
-				56A2927E26BC2247009FAB0C /* Main.storyboard */,
+				563B441926BE7ABB003DF60A /* Modal */,
+				563B441426BE7A3B003DF60A /* Controller */,
+				563B441E26BE7C5C003DF60A /* View */,
 				56A2928126BC224E009FAB0C /* Assets.xcassets */,
 				56A2928326BC224F009FAB0C /* LaunchScreen.storyboard */,
 				56A2928626BC224F009FAB0C /* Info.plist */,
@@ -143,6 +170,7 @@
 				56A2927D26BC2247009FAB0C /* ViewController.swift in Sources */,
 				56A2927926BC2247009FAB0C /* AppDelegate.swift in Sources */,
 				56A2927B26BC2247009FAB0C /* SceneDelegate.swift in Sources */,
+				563B441B26BE7B12003DF60A /* Content.swift in Sources */,
 				56A2928E26BC28CE009FAB0C /* UIColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
