@@ -21,7 +21,7 @@ enum Content {
     
     static let color = [
         "be6e46",
-        "cde7b0", //太刺眼要換掉
+        "59BBB5", 
         "A3BFA8",
         "7286A0",
         "59594A",

@@ -38,10 +38,9 @@ class ViewController: UIViewController {
         
        print("randomNumber:\(randomNumber)")
         
-        // the text color on button have to be managed
-        
+       
     view.backgroundColor = UIColor(hexString: Content.color[randomNumber])
-    funFactButton.titleLabel?.textColor = UIColor(hexString: Content.color[randomNumber])
+    funFactButton.setTitleColor(UIColor(hexString: Content.color[randomNumber]), for: .normal)
     middleLabel.text = Content.text[randomNumber]
   }
 
