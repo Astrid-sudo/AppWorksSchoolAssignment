@@ -121,7 +121,7 @@ Type Method: We call type methods on the type itself, instead of on an instance.
 
 When preparing for an instance ready to use, stored properties in class and struct can’t be left in an indeterminate state.Initializer setting an initial value for each stored property on that instance and performing any other setup or initialization that’s required before the new instance is ready for use.
 
-The initializer in struct is relatively simple, because they don’t support inheritance, they can only delegate to another initializer that they provide themselves.All structures have an automatically generated memberwise initializer, which you can use to initialize the member properties of new structure instances.
+The initializer in struct is relatively simple, because they don’t support inheritance, they can only delegate to another initializer that they provide themselves. Structure types automatically receive a memberwise initializer if they don’t define any of their own custom initializers, which you can use to initialize the member properties of new structure instances.
 
 The initializer in class would be more complex. Because all of a class’s stored properties—including any properties the class inherits from its superclass—must be assigned an initial value during initialization. Unlike structures, class instances don’t receive a default memberwise initializer. In order to manage the load responsibilities in initialize a class instance,Swift defines two kinds of initializers - designated initializers and convenience initializers, for class types to help ensure all stored properties receive an initial value.
 
