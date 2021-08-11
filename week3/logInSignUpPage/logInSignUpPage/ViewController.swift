@@ -42,61 +42,55 @@ class ViewController: UIViewController {
         }
     }
     
-    //製作popAlert function，代入不同情況，會顯示不同message
+    
+    func popAlert(in status: Status){
+        let alert = UIAlertController(title: "Error", message: status.rawValue, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: { [self]_ in
+            accountTextField.text = ""
+            passwordTextField.text = ""
+            checkTextField.text = ""
+        })
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
     
     
     @IBAction func pressButton(_ sender: UIButton) {
         
-        //        sign up狀態
+//                sign up狀態
         
         if  segmentControl.selectedSegmentIndex == 1 {
             
             //        sign up account empty
             guard  accountTextField.text != "" else{
-                let alert = UIAlertController(title: "Error", message: "Account should not be empty.", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(okAction)
-                present(alert, animated: true, completion: nil)
+                popAlert(in: Status.accountEmpty)
                 return
             }
             
             //        sign up  password empty
-            
             guard let password =  passwordTextField.text else{ return}
-            
             if password == ""{
-                let alert = UIAlertController(title: "Error", message: "Password should not be empty.", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(okAction)
-                present(alert, animated: true, completion: nil)
+                popAlert(in: Status.passwordEmpty)
             }
             
             //        sign up check password empty
             guard let check =  checkTextField.text else{return }
             if check == "" {
-                let alert = UIAlertController(title: "Error", message: "Check Password should not be empty.", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(okAction)
-                present(alert, animated: true, completion: nil)
-                
-            } else if check != password{ //            check password
-                let alert = UIAlertController(title: "Error", message: "SignUp fail", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(okAction)
-                present(alert, animated: true, completion: nil)
-                
+                popAlert(in: Status.checkEmpty)
+            
+            //            check password
+            } else if check != password{
+                popAlert(in: Status.passwordNotEqualToCheck)
             }
+//             log in狀態
+        } else {
             
-        } else { // log in狀態
-            
+            //invalid account,password
             guard let account = accountTextField.text,
                   let passWord = passwordTextField.text else{return}
             
-            if account != "appworksschool@gmail.com" || passWord != "1234" {
-                let alert = UIAlertController(title: "Error", message: "Login fail.", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(okAction)
-                present(alert, animated: true, completion: nil)
+            if account != Valid.account || passWord != Valid.password {
+                popAlert(in: Status.invalidAccountPassword)
             }
         }
     }
