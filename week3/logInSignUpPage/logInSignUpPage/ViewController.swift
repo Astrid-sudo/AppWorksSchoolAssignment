@@ -14,9 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var checkTextField: UITextField!
     @IBOutlet weak var checkLabel: UILabel!
-    @IBAction func pressButton(_ sender: UIButton) {
-    }
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +40,67 @@ class ViewController: UIViewController {
             checkTextField.backgroundColor = .white
             
         }
+    }
+    
+    //製作popAlert function，代入不同情況，會顯示不同message
+    
+    
+    @IBAction func pressButton(_ sender: UIButton) {
+        
+//        sign up狀態
+        
+        if  segmentControl.selectedSegmentIndex == 1 {
+        
+//        sign up account empty
+        guard  accountTextField.text != "" else{
+            let alert = UIAlertController(title: "Error", message: "Account should not be empty.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        //        sign up  password empty
+        guard  passwordTextField.text != "" else{
+            let alert = UIAlertController(title: "Error", message: "Password should not be empty.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+//        sign up check password empty
+        guard  checkTextField.text != "" else{
+            let alert = UIAlertController(title: "Error", message: "Check Password should not be empty.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        } else { // log in狀態
+            
+            guard let account = accountTextField.text,
+                  let passWord = passwordTextField.text else{return}
+            
+            if account != "appworksschool@gmail.com" || passWord != "1234" {
+                let alert = UIAlertController(title: "Error", message: "Login fail.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(okAction)
+                present(alert, animated: true, completion: nil)
+            }
+            
+         
+            
+            
+            
+            
+            
+            
+        }
+        
+        
+      
+      
     }
     
     
