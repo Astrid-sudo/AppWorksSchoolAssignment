@@ -20,17 +20,28 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         segmentControl.layer.borderWidth = 1.0
-        segmentControl.layer.cornerRadius = 5.0
-        segmentControl.layer.borderColor = UIColor.black.cgColor
-        segmentControl.layer.masksToBounds = true
-        segmentControl.backgroundColor = .white
-        segmentControl.tintColor = .black
         segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: UIControl.State.selected)
-        segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: UIControl.State.normal)
         segmentControl.selectedSegmentTintColor = .black
-        
-        
+        segmentControl.selectedSegmentIndex = 1
+    }
+//    鍵盤之後再處理
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    @IBAction func switchSegmentControl(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            checkLabel.textColor = .gray
+            checkTextField.isEnabled = false
+            checkTextField.backgroundColor = .darkGray
+        } else {
+            checkLabel.textColor = .black
+            checkTextField.isEnabled = true
+            checkTextField.backgroundColor = .white
+            
+        }
     }
     
     
