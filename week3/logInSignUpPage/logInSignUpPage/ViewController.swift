@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var checkTextField: UITextField!
     @IBOutlet weak var checkLabel: UILabel!
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         segmentControl.selectedSegmentTintColor = .black
         segmentControl.selectedSegmentIndex = 1
     }
-//    鍵盤之後再處理
+    //    鍵盤之後再處理
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -47,36 +47,46 @@ class ViewController: UIViewController {
     
     @IBAction func pressButton(_ sender: UIButton) {
         
-//        sign up狀態
+        //        sign up狀態
         
         if  segmentControl.selectedSegmentIndex == 1 {
-        
-//        sign up account empty
-        guard  accountTextField.text != "" else{
-            let alert = UIAlertController(title: "Error", message: "Account should not be empty.", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(okAction)
-            present(alert, animated: true, completion: nil)
-            return
-        }
-        
-        //        sign up  password empty
-        guard  passwordTextField.text != "" else{
-            let alert = UIAlertController(title: "Error", message: "Password should not be empty.", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(okAction)
-            present(alert, animated: true, completion: nil)
-            return
-        }
-        
-//        sign up check password empty
-        guard  checkTextField.text != "" else{
-            let alert = UIAlertController(title: "Error", message: "Check Password should not be empty.", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(okAction)
-            present(alert, animated: true, completion: nil)
-            return
-        }
+            
+            //        sign up account empty
+            guard  accountTextField.text != "" else{
+                let alert = UIAlertController(title: "Error", message: "Account should not be empty.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(okAction)
+                present(alert, animated: true, completion: nil)
+                return
+            }
+            
+            //        sign up  password empty
+            
+            guard let password =  passwordTextField.text else{ return}
+            
+            if password == ""{
+                let alert = UIAlertController(title: "Error", message: "Password should not be empty.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(okAction)
+                present(alert, animated: true, completion: nil)
+            }
+            
+            //        sign up check password empty
+            guard let check =  checkTextField.text else{return }
+            if check == "" {
+                let alert = UIAlertController(title: "Error", message: "Check Password should not be empty.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(okAction)
+                present(alert, animated: true, completion: nil)
+                
+            } else if check != password{ //            check password
+                let alert = UIAlertController(title: "Error", message: "SignUp fail", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(okAction)
+                present(alert, animated: true, completion: nil)
+                
+            }
+            
         } else { // log in狀態
             
             guard let account = accountTextField.text,
@@ -88,21 +98,7 @@ class ViewController: UIViewController {
                 alert.addAction(okAction)
                 present(alert, animated: true, completion: nil)
             }
-            
-         
-            
-            
-            
-            
-            
-            
         }
-        
-        
-      
-      
     }
-    
-    
 }
 
