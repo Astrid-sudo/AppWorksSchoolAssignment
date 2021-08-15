@@ -18,6 +18,7 @@ enum Status: String {
 }
 
 enum Mode:Int {
+    
     case logIn
     case signUp
 }
@@ -26,6 +27,7 @@ struct Valid {
     
     static let account = "appworks_school@gmail.com"
     static let password = "1234"
+    
 }
 
 

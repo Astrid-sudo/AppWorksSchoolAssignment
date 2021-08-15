@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var checkTextField: UITextField!
     @IBOutlet weak var checkLabel: UILabel!
     
-  override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         segmentControl.layer.borderWidth = 1.0
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     @IBAction func switchSegmentControl(_ sender: UISegmentedControl) {
         
         self.view.endEditing(true)
-
+        
         switch sender.selectedSegmentIndex  {
         
         case Mode.logIn.rawValue:
@@ -40,11 +40,11 @@ class ViewController: UIViewController {
             checkTextField.backgroundColor = .darkGray
             checkTextField.text = ""
             
-       default:
+        default:
             checkLabel.textColor = .black
             checkTextField.isEnabled = true
             checkTextField.backgroundColor = .white
-       }
+        }
     }
     
     func popAlert(in status: Status){
@@ -57,37 +57,38 @@ class ViewController: UIViewController {
     func loginCheck(){
         
         guard let account = accountTextField.text,
-              account != "" else {
+                  account != "" else {
             popAlert(in: Status.accountEmpty)
             return
         }
         
         guard let password =  passwordTextField.text,
-              password != "" else {
+                  password != "" else {
             popAlert(in: Status.passwordEmpty)
             return
         }
         
-       if account != Valid.account || password != Valid.password {
+        if account != Valid.account || password != Valid.password {
             popAlert(in: Status.invalidAccountPassword)
         }
     }
     
     func signUpCheck(){
+        
         guard let account = accountTextField.text,
-              account != "" else {
+                  account != "" else {
             popAlert(in: Status.accountEmpty)
             return
         }
         
-       guard let password =  passwordTextField.text,
-              password != "" else {
+        guard let password =  passwordTextField.text,
+                  password != "" else {
             popAlert(in: Status.passwordEmpty)
             return
         }
         
         guard let check =  checkTextField.text,
-              check != ""  else {
+                  check != ""  else {
             popAlert(in: Status.checkEmpty)
             return
         }
@@ -95,10 +96,7 @@ class ViewController: UIViewController {
         if check != password{
             popAlert(in: Status.passwordNotEqualToCheck)
         }
-        
     }
-    
-
     
     @IBAction func pressButton(_ sender: UIButton) {
         
@@ -106,16 +104,18 @@ class ViewController: UIViewController {
         
         case Mode.logIn.rawValue:
             loginCheck()
-        
+            
         case Mode.signUp.rawValue:
             signUpCheck()
             
         default:
             break
-        
+            
         }
     }
 }
+
+//MARK:- extension ViewController: UITextFieldDelegate
 
 extension ViewController: UITextFieldDelegate {
     
@@ -127,7 +127,7 @@ extension ViewController: UITextFieldDelegate {
             passwordTextField.becomeFirstResponder()
             
         case (passwordTextField, Mode.logIn.rawValue):
-           loginCheck()
+            loginCheck()
             
         case (accountTextField, Mode.signUp.rawValue):
             passwordTextField.becomeFirstResponder()
