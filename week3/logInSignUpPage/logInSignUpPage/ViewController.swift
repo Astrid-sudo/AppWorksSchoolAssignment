@@ -15,36 +15,39 @@ class ViewController: UIViewController {
     @IBOutlet weak var checkTextField: UITextField!
     @IBOutlet weak var checkLabel: UILabel!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         segmentControl.layer.borderWidth = 1.0
         segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: UIControl.State.selected)
         segmentControl.selectedSegmentTintColor = .black
-        segmentControl.selectedSegmentIndex = 1
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        segmentControl.selectedSegmentIndex = Mode.signUp.rawValue
+        
+        accountTextField.delegate = self
+        passwordTextField.delegate = self
+        checkTextField.delegate = self
     }
     
     @IBAction func switchSegmentControl(_ sender: UISegmentedControl) {
         
+        textFieldDidBeginEditing(passwordTextField)
+        
         switch sender.selectedSegmentIndex  {
         
-        case 0:
+        case Mode.logIn.rawValue:
             checkLabel.textColor = .gray
             checkTextField.isEnabled = false
             checkTextField.backgroundColor = .darkGray
             checkTextField.text = ""
-        
+            
         default:
             checkLabel.textColor = .black
             checkTextField.isEnabled = true
             checkTextField.backgroundColor = .white
         }
     }
-    
     
     func popAlert(in status: Status){
         let alert = UIAlertController(title: "Error", message: status.rawValue, preferredStyle: .alert)
@@ -53,64 +56,112 @@ class ViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    
-    @IBAction func pressButton(_ sender: UIButton) {
-        
+    func loginOrSignIn(){
         switch segmentControl.selectedSegmentIndex {
         
-        case 1:
+        case Mode.signUp.rawValue:
             
-           guard let account = accountTextField.text,
-                     account != "" else {
-            popAlert(in: Status.accountEmpty)
-            return
+            guard let account = accountTextField.text,
+                  account != "" else {
+                popAlert(in: Status.accountEmpty)
+                return
             }
-         
+            
             
             guard let password =  passwordTextField.text,
-                      password != "" else {
+                  password != "" else {
                 popAlert(in: Status.passwordEmpty)
                 return
             }
-           
+            
             guard let check =  checkTextField.text,
-                      check != ""  else {
+                  check != ""  else {
                 popAlert(in: Status.checkEmpty)
                 return
-           }
+            }
             
-           if check != password{
+            if check != password{
                 popAlert(in: Status.passwordNotEqualToCheck)
             }
             
+        default:
             
-//            guard let check =  checkTextField.text else{ return }
-//            if check == "" {
-//                popAlert(in: Status.checkEmpty)
-//            } else if check != password{
-//                popAlert(in: Status.passwordNotEqualToCheck)
-//            }
+            guard let account = accountTextField.text,
+                  let passWord = passwordTextField.text else{ return }
             
-     default:
-            
-        guard let account = accountTextField.text,
-              let passWord = passwordTextField.text else{ return }
-            
-        if account != Valid.account || passWord != Valid.password {
+            if account != Valid.account || passWord != Valid.password {
                 popAlert(in: Status.invalidAccountPassword)
             }
+        }
+        
+    }
+    
+    @IBAction func pressButton(_ sender: UIButton) {
+        loginOrSignIn()
+    }
+}
+
+extension ViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        switch textField {
+        
+        //登入 帳號
+        case accountTextField  where segmentControl.selectedSegmentIndex == Mode.logIn.rawValue:
+            passwordTextField.becomeFirstResponder()
+            
+        //登入 密碼
+        case passwordTextField where segmentControl.selectedSegmentIndex == Mode.logIn.rawValue:
+            loginOrSignIn()
+            
+        //註冊 帳號
+        case accountTextField  where segmentControl.selectedSegmentIndex == Mode.signUp.rawValue:
+            passwordTextField.becomeFirstResponder()
+            
+        //註冊 密碼
+        case passwordTextField where segmentControl.selectedSegmentIndex == Mode.signUp.rawValue:
+            checkTextField.becomeFirstResponder()
+            
+        case checkTextField:
+            loginOrSignIn()
+            
+        default:
+            textField.resignFirstResponder()
+        }
+        
+        return false
+    }
+    
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        switch textField {
+        
+        case accountTextField:
+            passwordTextField.returnKeyType = .next
+            
+        case passwordTextField where segmentControl.selectedSegmentIndex == Mode.logIn.rawValue:
+            passwordTextField.returnKeyType = .done
+            
+        case passwordTextField where segmentControl.selectedSegmentIndex == Mode.signUp.rawValue:
+            passwordTextField.returnKeyType = .next
+            
+        case checkLabel:
+            passwordTextField.returnKeyType = .done
+            
+        default:
+            break
         }
     }
 }
 
-//guard let password =  passwordTextField.text else{ return }
-//if password == ""{
-//    popAlert(in: Status.passwordEmpty)
-//}
-//
-//guard let check =  checkTextField.text else{ return }
-//if check == "" {
-//    popAlert(in: Status.checkEmpty)
-//} else if check != password{
-//    popAlert(in: Status.passwordNotEqualToCheck)
-//}
+
+
+
+
+
+
+
+
+
+

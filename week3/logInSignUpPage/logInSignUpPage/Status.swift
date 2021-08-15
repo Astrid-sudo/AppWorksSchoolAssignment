@@ -17,6 +17,11 @@ enum Status: String {
     case invalidAccountPassword = "Login fail."
 }
 
+enum Mode:Int {
+    case logIn
+    case signUp
+}
+
 struct Valid {
     
     static let account = "appworks_school@gmail.com"
