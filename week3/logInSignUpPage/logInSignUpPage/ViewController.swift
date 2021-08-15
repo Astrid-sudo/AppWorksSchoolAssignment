@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var checkTextField: UITextField!
     @IBOutlet weak var checkLabel: UILabel!
     
+    //如果segment value change 檢查 password是firstresponder的話 login = done/ signUp = next
     
     
     override func viewDidLoad() {
@@ -25,6 +26,7 @@ class ViewController: UIViewController {
         segmentControl.selectedSegmentTintColor = .black
         segmentControl.selectedSegmentIndex = Mode.signUp.rawValue
         
+        
         accountTextField.delegate = self
         passwordTextField.delegate = self
         checkTextField.delegate = self
@@ -32,7 +34,15 @@ class ViewController: UIViewController {
     
     @IBAction func switchSegmentControl(_ sender: UISegmentedControl) {
         
-        textFieldDidBeginEditing(passwordTextField)
+        if passwordTextField.isFirstResponder {
+            switch sender.selectedSegmentIndex{
+            case Mode.logIn.rawValue:
+                passwordTextField.returnKeyType = .done
+                
+            default:
+                passwordTextField.returnKeyType = .next
+            }
+        }
         
         switch sender.selectedSegmentIndex  {
         
@@ -42,10 +52,12 @@ class ViewController: UIViewController {
             checkTextField.backgroundColor = .darkGray
             checkTextField.text = ""
             
+            
         default:
             checkLabel.textColor = .black
             checkTextField.isEnabled = true
             checkTextField.backgroundColor = .white
+            
         }
     }
     
@@ -105,25 +117,21 @@ extension ViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        switch textField {
+        switch (textField,segmentControl.selectedSegmentIndex) {
         
-        //登入 帳號
-        case accountTextField  where segmentControl.selectedSegmentIndex == Mode.logIn.rawValue:
+        case (accountTextField, Mode.logIn.rawValue):
             passwordTextField.becomeFirstResponder()
             
-        //登入 密碼
-        case passwordTextField where segmentControl.selectedSegmentIndex == Mode.logIn.rawValue:
+        case (passwordTextField, Mode.logIn.rawValue):
             loginOrSignIn()
             
-        //註冊 帳號
-        case accountTextField  where segmentControl.selectedSegmentIndex == Mode.signUp.rawValue:
+        case (accountTextField, Mode.signUp.rawValue):
             passwordTextField.becomeFirstResponder()
             
-        //註冊 密碼
-        case passwordTextField where segmentControl.selectedSegmentIndex == Mode.signUp.rawValue:
+        case (passwordTextField, Mode.signUp.rawValue):
             checkTextField.becomeFirstResponder()
             
-        case checkTextField:
+        case (checkTextField, _ ):
             loginOrSignIn()
             
         default:
@@ -135,19 +143,19 @@ extension ViewController: UITextFieldDelegate {
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        switch textField {
+        switch (textField,segmentControl.selectedSegmentIndex) {
         
-        case accountTextField:
+        case (accountTextField, _) :
             passwordTextField.returnKeyType = .next
             
-        case passwordTextField where segmentControl.selectedSegmentIndex == Mode.logIn.rawValue:
+        case (passwordTextField, Mode.logIn.rawValue):
             passwordTextField.returnKeyType = .done
             
-        case passwordTextField where segmentControl.selectedSegmentIndex == Mode.signUp.rawValue:
+        case (passwordTextField, Mode.signUp.rawValue):
             passwordTextField.returnKeyType = .next
             
-        case checkLabel:
-            passwordTextField.returnKeyType = .done
+        case (checkTextField, _):
+            checkTextField.returnKeyType = .done
             
         default:
             break
