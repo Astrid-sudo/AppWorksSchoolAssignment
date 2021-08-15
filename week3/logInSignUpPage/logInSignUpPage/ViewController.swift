@@ -15,17 +15,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var checkTextField: UITextField!
     @IBOutlet weak var checkLabel: UILabel!
     
-    //如果segment value change 檢查 password是firstresponder的話 login = done/ signUp = next
-    
-    
-    override func viewDidLoad() {
+  override func viewDidLoad() {
         super.viewDidLoad()
         
         segmentControl.layer.borderWidth = 1.0
         segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: UIControl.State.selected)
         segmentControl.selectedSegmentTintColor = .black
         segmentControl.selectedSegmentIndex = Mode.signUp.rawValue
-        
         
         accountTextField.delegate = self
         passwordTextField.delegate = self
@@ -34,16 +30,8 @@ class ViewController: UIViewController {
     
     @IBAction func switchSegmentControl(_ sender: UISegmentedControl) {
         
-        if passwordTextField.isFirstResponder {
-            switch sender.selectedSegmentIndex{
-            case Mode.logIn.rawValue:
-                passwordTextField.returnKeyType = .done
-                
-            default:
-                passwordTextField.returnKeyType = .next
-            }
-        }
-        
+        self.view.endEditing(true)
+
         switch sender.selectedSegmentIndex  {
         
         case Mode.logIn.rawValue:
@@ -52,13 +40,11 @@ class ViewController: UIViewController {
             checkTextField.backgroundColor = .darkGray
             checkTextField.text = ""
             
-            
-        default:
+       default:
             checkLabel.textColor = .black
             checkTextField.isEnabled = true
             checkTextField.backgroundColor = .white
-            
-        }
+       }
     }
     
     func popAlert(in status: Status){
@@ -68,48 +54,66 @@ class ViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func loginOrSignIn(){
-        switch segmentControl.selectedSegmentIndex {
+    func loginCheck(){
         
-        case Mode.signUp.rawValue:
-            
-            guard let account = accountTextField.text,
-                  account != "" else {
-                popAlert(in: Status.accountEmpty)
-                return
-            }
-            
-            
-            guard let password =  passwordTextField.text,
-                  password != "" else {
-                popAlert(in: Status.passwordEmpty)
-                return
-            }
-            
-            guard let check =  checkTextField.text,
-                  check != ""  else {
-                popAlert(in: Status.checkEmpty)
-                return
-            }
-            
-            if check != password{
-                popAlert(in: Status.passwordNotEqualToCheck)
-            }
-            
-        default:
-            
-            guard let account = accountTextField.text,
-                  let passWord = passwordTextField.text else{ return }
-            
-            if account != Valid.account || passWord != Valid.password {
-                popAlert(in: Status.invalidAccountPassword)
-            }
+        guard let account = accountTextField.text,
+              account != "" else {
+            popAlert(in: Status.accountEmpty)
+            return
+        }
+        
+        guard let password =  passwordTextField.text,
+              password != "" else {
+            popAlert(in: Status.passwordEmpty)
+            return
+        }
+        
+       if account != Valid.account || password != Valid.password {
+            popAlert(in: Status.invalidAccountPassword)
+        }
+    }
+    
+    func signUpCheck(){
+        guard let account = accountTextField.text,
+              account != "" else {
+            popAlert(in: Status.accountEmpty)
+            return
+        }
+        
+       guard let password =  passwordTextField.text,
+              password != "" else {
+            popAlert(in: Status.passwordEmpty)
+            return
+        }
+        
+        guard let check =  checkTextField.text,
+              check != ""  else {
+            popAlert(in: Status.checkEmpty)
+            return
+        }
+        
+        if check != password{
+            popAlert(in: Status.passwordNotEqualToCheck)
         }
         
     }
     
+
+    
     @IBAction func pressButton(_ sender: UIButton) {
-        loginOrSignIn()
+        
+        switch segmentControl.selectedSegmentIndex{
+        
+        case Mode.logIn.rawValue:
+            loginCheck()
+        
+        case Mode.signUp.rawValue:
+            signUpCheck()
+            
+        default:
+            break
+        
+        }
     }
 }
 
@@ -123,7 +127,7 @@ extension ViewController: UITextFieldDelegate {
             passwordTextField.becomeFirstResponder()
             
         case (passwordTextField, Mode.logIn.rawValue):
-            loginOrSignIn()
+           loginCheck()
             
         case (accountTextField, Mode.signUp.rawValue):
             passwordTextField.becomeFirstResponder()
@@ -131,8 +135,8 @@ extension ViewController: UITextFieldDelegate {
         case (passwordTextField, Mode.signUp.rawValue):
             checkTextField.becomeFirstResponder()
             
-        case (checkTextField, _ ):
-            loginOrSignIn()
+        case (checkTextField, _):
+            signUpCheck()
             
         default:
             textField.resignFirstResponder()
@@ -146,7 +150,7 @@ extension ViewController: UITextFieldDelegate {
         switch (textField,segmentControl.selectedSegmentIndex) {
         
         case (accountTextField, _) :
-            passwordTextField.returnKeyType = .next
+            accountTextField.returnKeyType = .next
             
         case (passwordTextField, Mode.logIn.rawValue):
             passwordTextField.returnKeyType = .done
