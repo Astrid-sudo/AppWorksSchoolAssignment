@@ -31,11 +31,13 @@ class ViewController: UIViewController {
     @IBAction func switchSegmentControl(_ sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex  {
+        
         case 0:
             checkLabel.textColor = .gray
             checkTextField.isEnabled = false
             checkTextField.backgroundColor = .darkGray
             checkTextField.text = ""
+        
         default:
             checkLabel.textColor = .black
             checkTextField.isEnabled = true
@@ -57,31 +59,58 @@ class ViewController: UIViewController {
         switch segmentControl.selectedSegmentIndex {
         
         case 1:
-            guard  accountTextField.text != "" else{
-                popAlert(in: Status.accountEmpty)
+            
+           guard let account = accountTextField.text,
+                     account != "" else {
+            popAlert(in: Status.accountEmpty)
+            return
+            }
+         
+            
+            guard let password =  passwordTextField.text,
+                      password != "" else {
+                popAlert(in: Status.passwordEmpty)
                 return
             }
-            
-            guard let password =  passwordTextField.text else{ return }
-            if password == ""{
-                popAlert(in: Status.passwordEmpty)
-            }
-            
-            guard let check =  checkTextField.text else{ return }
-            if check == "" {
+           
+            guard let check =  checkTextField.text,
+                      check != ""  else {
                 popAlert(in: Status.checkEmpty)
-            } else if check != password{
+                return
+           }
+            
+           if check != password{
                 popAlert(in: Status.passwordNotEqualToCheck)
             }
             
-        default:
-            guard let account = accountTextField.text,
-                  let passWord = passwordTextField.text else{ return }
             
-            if account != Valid.account || passWord != Valid.password {
+//            guard let check =  checkTextField.text else{ return }
+//            if check == "" {
+//                popAlert(in: Status.checkEmpty)
+//            } else if check != password{
+//                popAlert(in: Status.passwordNotEqualToCheck)
+//            }
+            
+     default:
+            
+        guard let account = accountTextField.text,
+              let passWord = passwordTextField.text else{ return }
+            
+        if account != Valid.account || passWord != Valid.password {
                 popAlert(in: Status.invalidAccountPassword)
             }
         }
     }
 }
 
+//guard let password =  passwordTextField.text else{ return }
+//if password == ""{
+//    popAlert(in: Status.passwordEmpty)
+//}
+//
+//guard let check =  checkTextField.text else{ return }
+//if check == "" {
+//    popAlert(in: Status.checkEmpty)
+//} else if check != password{
+//    popAlert(in: Status.passwordNotEqualToCheck)
+//}

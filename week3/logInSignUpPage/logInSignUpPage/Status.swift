@@ -14,10 +14,14 @@ enum Status: String {
     case passwordEmpty = "Password should not be empty."
     case passwordNotEqualToCheck = "SignUp fail"
     
-   case invalidAccountPassword = "Login fail."
+    case invalidAccountPassword = "Login fail."
 }
 
 struct Valid {
-    static let account = "appworksschool@gmail.com"
+    
+    static let account = "appworks_school@gmail.com"
     static let password = "1234"
 }
+
+
+
