@@ -17,10 +17,10 @@ class ViewController: UIViewController {
         table.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
         return table
     }()
-override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
-       view.addSubview(tableView)
-   }
+        view.addSubview(tableView)
+    }
 }
 
 //MARK:- UITableView DataSource
@@ -33,10 +33,10 @@ extension  ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseIdentifier, for: indexPath) as? TableViewCell else {
-           return UITableViewCell()
+            return UITableViewCell()
         }
-        
-    cell.label.text = "This is section \(indexPath.section), row\(indexPath.row)"
+        cell.configureLabel()
+        cell.label.text = "This is section \(indexPath.section), row\(indexPath.row)"
         
         return cell
     }
