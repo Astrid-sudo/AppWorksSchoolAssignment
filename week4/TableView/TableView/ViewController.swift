@@ -9,17 +9,40 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    lazy var tableView: UITableView = {
+lazy var tableView: UITableView = {
         let table = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: .plain)
+    table.translatesAutoresizingMaskIntoConstraints = false
         table.dataSource = self
         table.rowHeight = 118
         table.estimatedRowHeight = 0
+        table.allowsSelection = false
+        table.bounces = false
         table.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseIdentifier)
         return table
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
+        setupConstraints()
+    }
+    
+    override func viewSafeAreaInsetsDidChange() {
+        setupConstraints()
+    }
+   
+   private func setupConstraints(){
+        
+        let safeArea = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+        
+        ])
     }
 }
 
