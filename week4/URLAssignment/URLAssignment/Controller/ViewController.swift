@@ -8,22 +8,23 @@
 import UIKit
 
 class ViewController: UIViewController {
-    // 做一個view 把label都放上去
-
-    
+ 
     var dataManager = DataManager()
+    
     lazy var stationIDLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .systemFont(ofSize: 30)
         return label
     }()
+   
     lazy var stationNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .systemFont(ofSize: 80, weight: .thin)
         return label
     }()
+   
     lazy var addressLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -34,13 +35,13 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupConstraints()
-        
+        view.backgroundColor = UIColor(named: "stationAppColor")
+        setupLabels()
         dataManager.delegate = self
         dataManager.performRequest(to:StationDataAddress.r3)
     }
     
-    private func setupConstraints(){
+    private func setupLabels(){
         
         let safeArea = view.safeAreaLayoutGuide
         view.addSubview(stationIDLabel)
@@ -68,8 +69,6 @@ class ViewController: UIViewController {
             addressLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
-    
-    
 }
 //MARK:- DataManagerDelegate
 
