@@ -13,3 +13,9 @@ struct StationData: Codable {
     let stationName: String
     let stationAddress: String
 }
+
+struct StationDataAddress {
+    
+    static let r3 = "https://stations-98a59.firebaseio.com/practice.json"
+
+}
