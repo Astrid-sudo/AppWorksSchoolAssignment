@@ -9,6 +9,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    //Practice autolayout code
+    //Make it MVC
+    
     
     @IBOutlet weak var stationIDLabel: UILabel!
     @IBOutlet weak var stationNameLabel: UILabel!
@@ -25,33 +28,35 @@ class ViewController: UIViewController {
         request.httpMethod = "Get"
         
         let session = URLSession(configuration: .default)
-       
+        
         session.dataTask(with: url) {
-           
+            
             (data , response, error) in
-           
+            
             if let httpResponse = response as? HTTPURLResponse,
                httpResponse.statusCode == 200 {
-                guard let safeData = data else { return }
                 
-                do{
-                    let loadedData =  try JSONDecoder().decode(StationData.self, from: safeData)
-                    print(loadedData)
+                if let safeData = data {
+                    do{
+                        let loadedData =  try JSONDecoder().decode(StationData.self, from: safeData)
+                        
+                        DispatchQueue.main.async {
+                            self.stationIDLabel.text = loadedData.stationID
+                            self.stationNameLabel.text = loadedData.stationName
+                            self.addressLabel.text = loadedData.stationAddress
+                        }
+                        
+                    } catch {
+                        
+                        print("Parse JSON Failed: \(error.localizedDescription)")
+                   }
+                } else {
                     
-                    DispatchQueue.main.async {
-                        self.stationIDLabel.text = loadedData.stationID
-                        self.stationNameLabel.text = loadedData.stationName
-                        self.addressLabel.text = loadedData.stationAddress
-                    }
-                    
-              } catch {
-                    print("Parse JSON Failed: \(error.localizedDescription)")
+                    print("Error: \((error!.localizedDescription))")
+                    return
                 }
-                
-            } else {
-                print("Error: \((error!.localizedDescription))")
-            }
-        }.resume()
+           }
+            
+        } .resume()
     }
 }
-
